@@ -20,8 +20,8 @@ def setup_argparser():
     :rtype: object
     """
     parser = argparse.ArgumentParser(prog='FallParams.py', usage='python3 %(prog)s [options]')
-    parser.add_argument('-d', type=str,
-                        help='Enter a domain to retrieve the parameters')
+    parser.add_argument('-u', type=str,
+                        help='Enter a url to retrieve the parameters')
     return parser
 
 
@@ -173,12 +173,15 @@ def check_folder_file(url):
 
 
 def main():
-    validator(args.d)
-    values = parameters_extractor(args.d)
+    validator(args.u)
+    values = parameters_extractor(args.u)
     if values:
-        file_path = check_folder_file(args.d)
+        file_path = check_folder_file(args.u)
         with open(file_path, 'w', encoding='utf-8') as f:
             f.writelines('\n'.join(values))
+        print(f'Done! Check the file path: {file_path}')
+    else:
+        print('No parameters found!')
 
 
 if __name__ == '__main__':
