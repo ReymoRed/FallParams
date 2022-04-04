@@ -166,10 +166,10 @@ def check_folder_file(url):
 
     #### Check/Create file by domain name
     domain = str(urlparse(url).netloc)
-    fle = Path(f'{output_folder}{domain}.txt')
-    fle.touch(exist_ok=True)
+    path = Path(f'{output_folder}{domain}.txt')
+    path.touch(exist_ok=True)
 
-    return fle
+    return path
 
 
 def main():
