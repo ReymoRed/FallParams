@@ -24,7 +24,7 @@ def setup_argparser():
     parser = argparse.ArgumentParser(prog='FallParams.py', usage='python3 %(prog)s [options]')
     parser.add_argument('-u', type=str,
                         help='Enter a url to retrieve the parameters')
-    parser.add_argument('--show', help='Enter a url to retrieve the parameters', action='store_true')
+    parser.add_argument('--show', help='save to file and show params in terminal', action='store_true')
     return parser
 
 
