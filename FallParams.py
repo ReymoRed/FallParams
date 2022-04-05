@@ -117,6 +117,7 @@ def setup_selenium():
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+    terminal_clear()
     return driver
 
 
@@ -161,6 +162,7 @@ def check_folder_file(url):
     If the path output/ does not exist, it creates it
     and also if the file (domain+.txt) does not exist, it creates it
 
+    :params: url
     :rtype: Path
     """
     #### Check/Create folder Output
@@ -176,11 +178,17 @@ def check_folder_file(url):
 
 
 def save_to_file(file_path, values):
+    """
+    got file_path and values and save it
+    """
     with open(file_path, 'w', encoding='utf-8') as f:
         f.writelines('\n'.join(values))
 
 
 def terminal_clear():
+    """
+        clear terminal
+    """
     subprocess.Popen("cls" if platform.system() == "Windows" else "clear", shell=True)
 
 
@@ -192,7 +200,6 @@ def main():
     if values:
         file_path = check_folder_file(args.u)
         if args.show:
-            terminal_clear()
             print('\n'.join(list(values)))
             save_to_file(file_path, values)
         else:
