@@ -1,0 +1,6 @@
+/output/*
+.DS_Store
+.idea/
+venv
+.venv
+chromedriver

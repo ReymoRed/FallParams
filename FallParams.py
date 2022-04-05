@@ -173,6 +173,8 @@ def check_folder_file(url):
 
 
 def main():
+    if args.u is None:
+        args.u = input('Enter the URL (example: https://www.google.com): ')
     validator(args.u)
     values = parameters_extractor(args.u)
     if values:
