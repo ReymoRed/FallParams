@@ -25,6 +25,7 @@ def setup_argparser():
     parser.add_argument('-u', type=str,
                         help='Enter a url to retrieve the parameters')
     parser.add_argument('--show', help='save to file and show params in terminal', action='store_true')
+    parser.add_argument('--append', help='The result will be appended to the file, not override', action='store_true')
     return parser
 
 
@@ -181,8 +182,12 @@ def save_to_file(file_path, values):
     """
     got file_path and values and save it
     """
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.writelines('\n'.join(values))
+    if args.append:
+        with open(file_path, 'a', encoding='utf-8') as f:
+            f.writelines('\n'.join(values))
+    else:
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.writelines('\n'.join(values))
 
 
 def terminal_clear():
