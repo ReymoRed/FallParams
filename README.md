@@ -8,6 +8,9 @@ Download your Chrome driver (linux / windows / mac) from this
 [ Link ](https://chromedriver.storage.googleapis.com/index.html?path=100.0.4896.60/)
 in the project list and decompress it.
 
+if selenium web driver is not installed on you server, install it with this Link:
+[ Link ](https://tecadmin.net/setup-selenium-chromedriver-on-ubuntu/)
+
 ``pip3 install -r requirements.txt``
 
 #Usage Models
