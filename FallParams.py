@@ -141,7 +141,7 @@ def parameters_extractor(domain):
     scripts_content, multi_level_jsons = get_multilevel_jsons_keys(soup)
     driver.close()
 
-    return chain(inputs_keys, queries, valid_parsed, scripts_content, multi_level_jsons)
+    return chain(inputs_keys, queries, valid_parsed, scripts_content, multi_level_jsons, '\n')
 
 
 def validator(domain):
@@ -156,6 +156,18 @@ def validator(domain):
 
     if not is_live_domain(domain):
         print("URL isn't Live!")
+
+
+def check_file_all_params():
+    """
+    Checks if the file all_params.txt exists
+
+    """
+    output_folder = dir_path + '/output/'
+    path = Path(f'{output_folder}all_params.txt')
+    path.touch(exist_ok=True)
+
+    return path
 
 
 def check_folder_file(url):
@@ -178,16 +190,30 @@ def check_folder_file(url):
     return path
 
 
+def save_to_all_params(values):
+    """
+    save parameters in all_params.txt
+
+    :param values:
+    """
+
+    file_path = check_file_all_params()
+    with open(file_path, 'a', encoding='utf-8') as f:
+        f.writelines('\n'.join(values))
+
+
 def save_to_file(file_path, values):
     """
     got file_path and values and save it
     """
     if args.append:
         with open(file_path, 'a', encoding='utf-8') as f:
+            save_to_all_params(values)
             f.writelines('\n'.join(values))
     else:
         with open(file_path, 'w', encoding='utf-8') as f:
             f.writelines('\n'.join(values))
+            save_to_all_params(values)
 
 
 def terminal_clear():
@@ -203,12 +229,13 @@ def main():
     validator(args.u)
     values = parameters_extractor(args.u)
     if values:
+        list_of_values = list(values)
         file_path = check_folder_file(args.u)
         if args.show:
-            print('\n'.join(list(values)))
-            save_to_file(file_path, values)
+            save_to_file(file_path, list_of_values)
+            print('\n'.join(list_of_values))
         else:
-            save_to_file(file_path, values)
+            save_to_file(file_path, list_of_values)
             print(f'Done! Check the file path: {file_path}')
 
     else:
