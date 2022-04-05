@@ -7,6 +7,8 @@ from bs4 import BeautifulSoup
 from itertools import chain
 from pathlib import Path
 import urllib.request
+import subprocess
+import platform
 import argparse
 import json
 import re
@@ -22,6 +24,7 @@ def setup_argparser():
     parser = argparse.ArgumentParser(prog='FallParams.py', usage='python3 %(prog)s [options]')
     parser.add_argument('-u', type=str,
                         help='Enter a url to retrieve the parameters')
+    parser.add_argument('--show', help='Enter a url to retrieve the parameters', action='store_true')
     return parser
 
 
@@ -172,6 +175,15 @@ def check_folder_file(url):
     return path
 
 
+def save_to_file(file_path, values):
+    with open(file_path, 'w', encoding='utf-8') as f:
+        f.writelines('\n'.join(values))
+
+
+def terminal_clear():
+    subprocess.Popen("cls" if platform.system() == "Windows" else "clear", shell=True)
+
+
 def main():
     if args.u is None:
         args.u = input('Enter the URL (example: https://www.google.com): ')
@@ -179,9 +191,14 @@ def main():
     values = parameters_extractor(args.u)
     if values:
         file_path = check_folder_file(args.u)
-        with open(file_path, 'w', encoding='utf-8') as f:
-            f.writelines('\n'.join(values))
-        print(f'Done! Check the file path: {file_path}')
+        if args.show:
+            terminal_clear()
+            print('\n'.join(list(values)))
+            save_to_file(file_path, values)
+        else:
+            save_to_file(file_path, values)
+            print(f'Done! Check the file path: {file_path}')
+
     else:
         print('No parameters found!')
 
